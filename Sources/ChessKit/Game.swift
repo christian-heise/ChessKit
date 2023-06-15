@@ -196,6 +196,21 @@ public class Game {
         }
         
         let rank = self.position.state.turn == .white ? 2 : 5
+        
+        let pieces = self.position.board.enumeratedPieces()
+        
+        if move.to.file < 7 {
+            guard pieces.contains(where: {
+                $0.0 == Square(file: move.to.file + 1, rank: move.to.rank) &&
+                $0.1 == Piece(kind: .pawn, color: self.position.state.turn.negotiated)
+            }) else { return nil }
+        }
+        if move.to.file > 0 {
+            guard pieces.contains(where: {
+                $0.0 == Square(file: move.to.file - 1, rank: move.to.rank) &&
+                $0.1 == Piece(kind: .pawn, color: self.position.state.turn.negotiated)
+            }) else { return nil }
+        }
         return Square(file: move.from.file, rank: rank)
     }
     

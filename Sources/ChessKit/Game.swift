@@ -199,15 +199,21 @@ public class Game {
         
         let pieces = self.position.board.enumeratedPieces()
         
-        if move.to.file < 7 {
+        switch move.to.file {
+        case 0:
             guard pieces.contains(where: {
                 $0.0 == Square(file: move.to.file + 1, rank: move.to.rank) &&
                 $0.1 == Piece(kind: .pawn, color: self.position.state.turn.negotiated)
             }) else { return nil }
-        }
-        if move.to.file > 0 {
+        case 7:
             guard pieces.contains(where: {
                 $0.0 == Square(file: move.to.file - 1, rank: move.to.rank) &&
+                $0.1 == Piece(kind: .pawn, color: self.position.state.turn.negotiated)
+            }) else { return nil }
+        default:
+            guard pieces.contains(where: {
+                ($0.0 == Square(file: move.to.file + 1, rank: move.to.rank) ||
+                 $0.0 == Square(file: move.to.file - 1, rank: move.to.rank)) &&
                 $0.1 == Piece(kind: .pawn, color: self.position.state.turn.negotiated)
             }) else { return nil }
         }

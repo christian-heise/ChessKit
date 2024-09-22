@@ -6,14 +6,19 @@
 //  Copyright © 2020 Päike Mikrosüsteemid OÜ. All rights reserved.
 //
 
+import Foundation
+
 /// Piece on `Board` with it's color.
-public struct Piece: Hashable, CustomStringConvertible {
+public struct Piece: Hashable, CustomStringConvertible, Identifiable {
     
     /// Piece kind.
     public let kind: PieceKind
     
     /// Piece color.
     public let color: PieceColor
+    
+    /// Make Piece identifiable to allow animation
+    public let id: UUID
     
     // MARK: Initialization
     
@@ -23,10 +28,13 @@ public struct Piece: Hashable, CustomStringConvertible {
      - Parameters:
         - kind: Piece kind.
         - color: Piece color.
+        - id: Piece identification (optional)
+
      */
-    public init(kind: PieceKind, color: PieceColor) {
+    public init(kind: PieceKind, color: PieceColor, id: UUID = UUID()) {
         self.kind = kind
         self.color = color
+        self.id = id
     }
     
     /**
